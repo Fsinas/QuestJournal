@@ -1,0 +1,37 @@
+package me.afkfsin.questcodex.entries.codex.category
+
+import com.typewritermc.core.books.pages.Colors
+import com.typewritermc.core.entries.Ref
+import com.typewritermc.core.entries.emptyRef
+import com.typewritermc.core.extension.annotations.Entry
+import com.typewritermc.core.extension.annotations.Help
+import com.typewritermc.core.extension.annotations.Segments
+import com.typewritermc.engine.paper.entry.entries.BaseEntry
+import com.typewritermc.engine.paper.entry.entries.ReadableFactEntry
+import com.typewritermc.quest.QuestEntry
+
+/**
+ * Category listing quest cells for the Quest Codex.
+ *
+ * Each quest cell references a QuestActiveFactEntry (or compatible ReadableFactEntry) controlling visibility.
+ */
+@Entry(
+    "quest_codex_category",
+    "Quest Codex category (e.g. Season / Chapter)",
+    Colors.MYRTLE_GREEN,
+    "mdi:folder-open"
+)
+class QuestCodexCategoryEntry(
+    override val id: String = "",
+    override val name: String = "",
+    @Help("Quest cells displayed in this category (filtered by their activeFact).")
+    @Segments(icon = "mdi:book-outline")
+    val quests: List<QuestCodexQuestDefinition> = emptyList()
+) : BaseEntry
+
+data class QuestCodexQuestDefinition(
+    val quest: Ref<QuestEntry> = emptyRef(),
+    val overrideTitle: String = "",
+    val overrideDescription: String = "",
+    val activeFact: Ref<out ReadableFactEntry> = emptyRef()
+)
